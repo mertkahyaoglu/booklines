@@ -1,4 +1,4 @@
-package com.example.booklines
+package com.mertkahyaoglu.booklines
 
 import android.os.Bundle
 

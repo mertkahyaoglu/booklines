@@ -13,29 +13,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final books = List.generate(
-    20,
-    (i) => Book(
-      'Book $i',
-      'A description of what needs to be done for Book $i',
-    ),
-  );
-
-  void getData() {
-    Firestore.instance
-        .collection('books')
-        .getDocuments()
-        .then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f) => print('**DATA**: ${f.data}}'));
-    });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    getData();
+  Stream<QuerySnapshot> getBookSnapshots() {
+    return Firestore.instance.collection('books').snapshots();
   }
 
   @override
@@ -70,26 +49,33 @@ class _HomePageState extends State<HomePage> {
           },
         );
 
-    final makeCard = (index) => Card(
+    final makeCard = (Book book) => Card(
           child: Container(
             decoration: BoxDecoration(
                 border: Border.all(
                     color: Color.fromRGBO(237, 236, 237, 1.0), width: 0.5)),
-            child: makeListTile(books[index]),
+            child: makeListTile(book),
           ),
         );
 
     final makeBody = Container(
-      margin: EdgeInsets.all(12),
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int index) {
-          return makeCard(index);
-        },
-      ),
-    );
+        margin: EdgeInsets.all(12),
+        child: StreamBuilder(
+            stream: getBookSnapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Container(child: Center(child: Text("No data")));
+              }
+
+              return ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: snapshot.data.documents.length,
+                  itemBuilder: (_, int index) {
+                    return makeCard(Book.fromSnapshot(snapshot.data.documents[
+                        index]));
+                  });
+            }));
 
     return Scaffold(
       backgroundColor: Colors.white,

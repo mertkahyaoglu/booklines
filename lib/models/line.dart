@@ -12,4 +12,9 @@ class Line {
     this.pageNumber = pageNumber;
     this.id = uuid.v1();
   }
+
+  Line.fromMap(Map<dynamic, dynamic> data)
+      : id = data["id"],
+        line = data["line"],
+        pageNumber = data['pageNumber'];
 }
