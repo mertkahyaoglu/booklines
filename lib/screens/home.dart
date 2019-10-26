@@ -1,5 +1,6 @@
 import 'package:booklines/models/book.dart';
 import 'package:booklines/screens/book.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,12 +21,27 @@ class _HomePageState extends State<HomePage> {
     ),
   );
 
+  void getData() {
+    Firestore.instance
+        .collection('books')
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) => print('**DATA**: ${f.data}}'));
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     final topAppBar = AppBar(
-      elevation: 0.1,
-      backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
-      title: Text(widget.title),
+      title: Text("Booklines"),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.list),
@@ -64,7 +80,7 @@ class _HomePageState extends State<HomePage> {
         );
 
     final makeBody = Container(
-      margin: EdgeInsets.symmetric(vertical: 12),
+      margin: EdgeInsets.all(12),
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
@@ -79,6 +95,19 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: topAppBar,
       body: makeBody,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BookPage(book: new Book("", "")),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.add,
+        ),
+      ),
     );
   }
 }
