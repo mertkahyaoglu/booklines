@@ -18,9 +18,7 @@ class _BookPageState extends State<BookPage> {
   @override
   Widget build(BuildContext context) {
     final topAppBar = AppBar(
-      elevation: 0.1,
-      backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
-      title: Text(book.title),
+      title: Text(book.title.isEmpty ? "Create a book" : book.title),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.list),
@@ -33,28 +31,29 @@ class _BookPageState extends State<BookPage> {
       child: Container(
         padding: const EdgeInsets.all(8),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-                book.title,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                ),
+          Text(
+            book.title,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
             ),
-            Text(
-                book.description,
-                style: TextStyle(
-                    color: Colors.grey[500],
-                )
+          ),
+          Text(book.description,
+              style: TextStyle(
+                color: Colors.grey[500],
+              )),
+          SizedBox(
+            width: double.maxFinite, // set width to maxFinite
+            child: RaisedButton(
+              //Button Color is as define in theme
+              onPressed: () {},
+              child: Text("Save"), //Text Color as define in theme
             ),
-            RaisedButton( //Button Color is as define in theme
-                onPressed: () {},
-                child: Text("Send"), //Text Color as define in theme
-            ),
+          )
         ]),
       ),
     );
 
     return Scaffold(
-      backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       appBar: topAppBar,
       body: makeBody,
     );
