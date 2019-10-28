@@ -17,4 +17,12 @@ class Line {
       : id = data["id"],
         line = data["line"],
         pageNumber = data['pageNumber'];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'line': line,
+      'pageNumber': pageNumber,
+    };
+  }
 }

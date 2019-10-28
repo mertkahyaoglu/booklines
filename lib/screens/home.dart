@@ -1,6 +1,7 @@
+import 'dart:math';
+
 import 'package:booklines/models/book.dart';
 import 'package:booklines/screens/book.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,10 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Stream<QuerySnapshot> getBookSnapshots() {
-    return Firestore.instance.collection('books').snapshots();
-  }
-
   @override
   Widget build(BuildContext context) {
     final topAppBar = AppBar(
@@ -59,23 +56,18 @@ class _HomePageState extends State<HomePage> {
         );
 
     final makeBody = Container(
-        margin: EdgeInsets.all(12),
-        child: StreamBuilder(
-            stream: getBookSnapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Container(child: Center(child: Text("No data")));
-              }
-
-              return ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: snapshot.data.documents.length,
-                  itemBuilder: (_, int index) {
-                    return makeCard(Book.fromSnapshot(snapshot.data.documents[
-                        index]));
-                  });
-            }));
+      margin: EdgeInsets.all(12),
+      child: FutureBuilder<List<Book>>(
+        future: getBooks(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return Center(child: CircularProgressIndicator());
+          return ListView(
+            children: snapshot.data.map((book) => makeCard(book)).toList(),
+          );
+        },
+      ),
+    );
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -86,7 +78,10 @@ class _HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => BookPage(book: new Book("", "")),
+              builder: (context) {
+                  Book book = Book(new Random().nextInt(10000), "", "");
+                  return BookPage(book: book, isCreate: true);
+              },
             ),
           );
         },
