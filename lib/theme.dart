@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ThemeColors {
   static const primaryColor = Color.fromRGBO(65, 155, 249, 1.0);
   static const textColor = Color.fromRGBO(85, 77, 86, 1.0);
-  static const borderColor = Color.fromRGBO(237, 236, 237, 1.0);
+  static const secondaryColor = Color.fromRGBO(237, 236, 237, 1.0);
   static const backgroundColor = Color.fromRGBO(251, 251, 251, 1.0);
 }
 
@@ -22,7 +22,7 @@ final theme = new ThemeData(
       elevation: 0.2,
       margin: new EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1, color: ThemeColors.borderColor),
+          side: BorderSide(width: 1, color: ThemeColors.secondaryColor),
           borderRadius: new BorderRadius.circular(2.0)),
       clipBehavior: Clip.antiAlias,
     ),
