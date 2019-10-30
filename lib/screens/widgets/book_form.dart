@@ -1,11 +1,7 @@
 import 'package:booklines/models/book.dart';
-import 'package:booklines/models/line.dart';
-import 'package:booklines/screens/line.dart';
 import 'package:booklines/theme.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:mlkit/mlkit.dart';
 
 class BookForm extends StatefulWidget {
   final Book book;
@@ -19,8 +15,6 @@ class BookForm extends StatefulWidget {
 }
 
 class _BookFormState extends State<BookForm> {
-  final FirebaseVisionTextDetector detector =
-      FirebaseVisionTextDetector.instance;
   final Book book;
   final Function onSubmit;
   final _formKey = GlobalKey<FormState>();
@@ -30,7 +24,6 @@ class _BookFormState extends State<BookForm> {
 
   String title;
   String description;
-  Line lastAddedLine;
 
   submit() {
     if (_formKey.currentState.validate()) {
@@ -42,7 +35,6 @@ class _BookFormState extends State<BookForm> {
 
       book.title = title;
       book.description = description;
-      book.addLine(lastAddedLine);
 
       onSubmit(book);
     }
@@ -52,7 +44,7 @@ class _BookFormState extends State<BookForm> {
     if (title != book.title) {
       return true;
     }
-    if (lastAddedLine != null) {
+    if (description != book.description) {
       return true;
     }
     return false;
@@ -81,15 +73,21 @@ class _BookFormState extends State<BookForm> {
                   });
                 },
               ),
-              FlatButton.icon(
-                padding: EdgeInsets.symmetric(vertical: 12),
-                icon: Icon(Icons.add),
-                label: Text(
-                  'Add a line',
-                  style: TextStyle(fontSize: 16),
-                ),
-                onPressed: () {
-                  showAddLineDialog(context);
+              TextFormField(
+                initialValue: book.description,
+                decoration: InputDecoration(labelText: 'Book Description'),
+                keyboardType: TextInputType.text,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter book description';
+                  }
+                  return null;
+                },
+                maxLines: null,
+                onChanged: (String val) {
+                  setState(() {
+                    description = val;
+                  });
                 },
               ),
               if (book.lines.length > 0)
@@ -126,77 +124,5 @@ class _BookFormState extends State<BookForm> {
                 ),
               )
             ]));
-  }
-
-  void passTextToLineScreen({text = ""}) async {
-    Navigator.pop(context);
-    final Line line = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) {
-          Line createLine = Line(text, 0);
-          return LinePage(line: createLine, isCreate: true);
-        },
-      ),
-    );
-    print(line.line);
-    if (line != null) {
-      book.addLine(line);
-      setState(() {
-        lastAddedLine = line;
-      });
-    }
-  }
-
-  void pickImageFromGallery() async {
-    try {
-      var file = await ImagePicker.pickImage(source: ImageSource.gallery);
-      if (file != null) {
-        List<VisionText> visionTextList =
-            await detector.detectFromPath(file?.path);
-        String wholeText = visionTextList.map((vt) => vt.text).join('\n');
-        passTextToLineScreen(text: wholeText);
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  void addWithKeyboard() {
-    try {
-      passTextToLineScreen();
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  void showAddLineDialog(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return Container(
-            child: new Wrap(
-              children: <Widget>[
-                new ListTile(
-                    leading: new Icon(Icons.camera),
-                    title: new Text('Add with camera'),
-                    onTap: () => {}),
-                new ListTile(
-                    leading: new Icon(Icons.image),
-                    title: new Text('Choose from gallery'),
-                    onTap: () {
-                      pickImageFromGallery();
-                    }),
-                new ListTile(
-                  leading: new Icon(Icons.keyboard),
-                  title: new Text('Add with keyboard'),
-                  onTap: () {
-                    addWithKeyboard();
-                  },
-                ),
-              ],
-            ),
-          );
-        });
   }
 }

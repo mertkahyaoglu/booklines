@@ -2,21 +2,21 @@ import 'package:booklines/models/book.dart';
 import 'package:booklines/screens/widgets/book_form.dart';
 import 'package:flutter/material.dart';
 
-class BookPage extends StatefulWidget {
+class BookEditPage extends StatefulWidget {
   final Book book;
   final bool isCreate;
 
-  BookPage({Key key, this.book, this.isCreate = false}) : super(key: key);
+  BookEditPage({Key key, this.book, this.isCreate = false}) : super(key: key);
 
   @override
-  _BookPageState createState() => _BookPageState(book, isCreate);
+  _BookEditPageState createState() => _BookEditPageState(book, isCreate);
 }
 
-class _BookPageState extends State<BookPage> {
+class _BookEditPageState extends State<BookEditPage> {
   Book book;
   bool isCreate;
 
-  _BookPageState(this.book, this.isCreate);
+  _BookEditPageState(this.book, this.isCreate);
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:booklines/models/book.dart';
-import 'package:booklines/screens/book.dart';
+import 'package:booklines/screens/book_detail.dart';
+import 'package:booklines/screens/book_edit.dart';
+import 'package:booklines/theme.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -40,7 +42,7 @@ class _HomePageState extends State<HomePage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => BookPage(book: book),
+                builder: (context) => BookDetail(book: book),
               ),
             )
           },
@@ -55,6 +57,10 @@ class _HomePageState extends State<HomePage> {
           ),
         );
 
+    Widget renderEmpty() {
+      return Center(child: Text("Empty"));
+    }
+
     final makeBody = Container(
       margin: EdgeInsets.all(12),
       child: FutureBuilder<List<Book>>(
@@ -62,6 +68,9 @@ class _HomePageState extends State<HomePage> {
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
+          print(snapshot.data.length);
+          if (snapshot.data.length == 0) return renderEmpty();
+
           return ListView(
             children: snapshot.data.map((book) => makeCard(book)).toList(),
           );
@@ -70,7 +79,6 @@ class _HomePageState extends State<HomePage> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: topAppBar,
       body: makeBody,
       floatingActionButton: FloatingActionButton(
@@ -79,8 +87,8 @@ class _HomePageState extends State<HomePage> {
             context,
             MaterialPageRoute(
               builder: (context) {
-                  Book book = Book(new Random().nextInt(10000), "", "");
-                  return BookPage(book: book, isCreate: true);
+                Book book = Book(new Random().nextInt(10000), "", "");
+                return BookEditPage(book: book, isCreate: true);
               },
             ),
           );

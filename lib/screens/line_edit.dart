@@ -2,21 +2,21 @@ import 'package:booklines/models/line.dart';
 import 'package:booklines/screens/widgets/line_form.dart';
 import 'package:flutter/material.dart';
 
-class LinePage extends StatefulWidget {
-  LinePage({Key key, this.line, this.isCreate}) : super(key: key);
+class LineEditPage extends StatefulWidget {
+  LineEditPage({Key key, this.line, this.isCreate}) : super(key: key);
 
   final Line line;
   final bool isCreate;
 
   @override
-  _LinePageState createState() => _LinePageState(line, isCreate);
+  _LineEditPageState createState() => _LineEditPageState(line, isCreate);
 }
 
-class _LinePageState extends State<LinePage> {
+class _LineEditPageState extends State<LineEditPage> {
   final Line line;
   final bool isCreate;
 
-  _LinePageState(this.line, this.isCreate);
+  _LineEditPageState(this.line, this.isCreate);
 
   void onSubmit(line) {
     Navigator.pop(context, line);
