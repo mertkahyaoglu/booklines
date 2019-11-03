@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group("Book class", () {
     test("adds a line", () {
-      final Book book = new Book(1, "1984", "Awesome book");
+      final Book book = new Book("1984", "Awesome book");
       final Line line = new Line("What an sad day it was", 9);
       book.addLine(line);
 
@@ -13,7 +13,7 @@ void main() {
     });
 
     test("deletes a line", () {
-      final Book book = new Book(2, "1984", "Awesome book");
+      final Book book = new Book("1984", "Awesome book");
       final Line line = new Line("What an sad day it was", 9);
       final Line line2 = new Line("Second line", 100);
 

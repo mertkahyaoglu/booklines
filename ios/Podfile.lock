@@ -1,4 +1,6 @@
 PODS:
+  - camera (0.0.1):
+    - Flutter
   - Firebase/Core (6.11.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 6.1.3)
@@ -168,7 +170,11 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - path_provider (0.0.1):
+    - Flutter
   - Protobuf (3.10.0)
+  - share (0.5.2):
+    - Flutter
   - sqflite (0.0.1):
     - Flutter
     - FMDB (~> 2.7.2)
@@ -177,9 +183,12 @@ PODS:
     - TensorFlowLiteC (= 1.14.0)
 
 DEPENDENCIES:
+  - camera (from `.symlinks/plugins/camera/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - mlkit (from `.symlinks/plugins/mlkit/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - share (from `.symlinks/plugins/share/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
 
 SPEC REPOS:
@@ -213,16 +222,23 @@ SPEC REPOS:
     - TensorFlowLiteObjC
 
 EXTERNAL SOURCES:
+  camera:
+    :path: ".symlinks/plugins/camera/ios"
   Flutter:
     :path: ".symlinks/flutter/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
   mlkit:
     :path: ".symlinks/plugins/mlkit/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
+  share:
+    :path: ".symlinks/plugins/share/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
+  camera: 38cc83ae9a5667bb5a71c7d9edaf60a91920fd4e
   Firebase: bc9cfc7a96c73268656d5aaab453ff1b4b530e0e
   FirebaseAnalytics: 0e3ecff2c5d86070f7d4325e21f1edabfbd558dc
   FirebaseCore: beeff42c07c30ea94702471d99db2089b594fbbd
@@ -250,7 +266,9 @@ SPEC CHECKSUMS:
   image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
   mlkit: d3f98c678b509216b5f65ee012ed665df9d86ddd
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
+  share: bae0a282aab4483288913fc4dc0b935d4b491f2e
   sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
   TensorFlowLiteC: a6702011fb661928634e59565b5fe262f69692d0
   TensorFlowLiteObjC: ece71b1e78f3df5952996c1606934b1d5538c875

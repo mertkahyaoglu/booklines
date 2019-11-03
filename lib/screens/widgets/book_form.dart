@@ -90,29 +90,6 @@ class _BookFormState extends State<BookForm> {
                   });
                 },
               ),
-              if (book.lines.length > 0)
-                Column(children: [
-                  Row(children: <Widget>[
-                    Text("Lines", style: TextStyle(fontSize: 16))
-                  ]),
-                  Row(
-                      children: book.lines
-                          .map((line) => ExpandablePanel(
-                                collapsed: Text(
-                                  line.line,
-                                  softWrap: true,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                expanded: Text(
-                                  line.line,
-                                  softWrap: true,
-                                ),
-                                tapHeaderToExpand: true,
-                                hasIcon: true,
-                              ))
-                          .toList()),
-                ]),
               SizedBox(
                 width: double.maxFinite,
                 child: RaisedButton(

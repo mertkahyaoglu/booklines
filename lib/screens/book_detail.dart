@@ -1,12 +1,17 @@
+import 'dart:io';
+
 import 'package:booklines/models/book.dart';
 import 'package:booklines/models/line.dart';
 import 'package:booklines/screens/book_edit.dart';
 import 'package:booklines/screens/line_detail.dart';
 import 'package:booklines/screens/line_edit.dart';
+import 'package:booklines/screens/take_picture.dart';
 import 'package:booklines/theme.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mlkit/mlkit.dart';
+import 'package:share/share.dart';
 
 class BookDetail extends StatefulWidget {
   final Book book;
@@ -22,8 +27,15 @@ class _BookDetailState extends State<BookDetail> {
 
   _BookDetailState(this.book);
 
+  final FirebaseVisionTextDetector detector =
+      FirebaseVisionTextDetector.instance;
+
+  Line addedLine;
+
   @override
   Widget build(BuildContext context) {
+    book.lines
+        .forEach((l) => print('LLLL: ${l.id} ${l.pageNumber} ${l.bookId}'));
     final topAppBar = AppBar(title: Text(book.title), actions: <Widget>[
       IconButton(
         icon: Icon(Icons.delete, color: Colors.red[400]),
@@ -32,11 +44,10 @@ class _BookDetailState extends State<BookDetail> {
             barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
-              // return object of type Dialog
               return AlertDialog(
                 content: Text.rich(
                   TextSpan(
-                    text: 'Delete ', // default text style
+                    text: 'Delete ',
                     children: <TextSpan>[
                       TextSpan(
                           text: book.title,
@@ -70,10 +81,6 @@ class _BookDetailState extends State<BookDetail> {
         },
       )
     ]);
-
-    void onSubmit(book) {
-      updateBook(book);
-    }
 
     final makeListTile = (Book book) => Column(
           children: <Widget>[
@@ -124,11 +131,43 @@ class _BookDetailState extends State<BookDetail> {
           },
         ),
       );
-      print(line.line);
+      print(line);
+      line.bookId = book.id;
+      int id = await insertLine(line);
+      line.id = id;
+
+      book.addLine(line);
+
+      setState(() {
+        addedLine = line;
+      });
     }
 
-    final FirebaseVisionTextDetector detector =
-        FirebaseVisionTextDetector.instance;
+    void takePicture() async {
+      Navigator.pop(context);
+
+      List<CameraDescription> cameras = await availableCameras();
+
+      final File imageFile = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return TakePicturePage(camera: cameras.first);
+          },
+        ),
+      );
+      if (imageFile != null) {
+        try {
+          List<VisionText> visionTextList =
+              await detector.detectFromPath(imageFile?.path);
+          String wholeText = visionTextList.map((vt) => vt.text).join('\n');
+          passTextToLineScreen(text: wholeText);
+        } catch (e) {
+          print(e.toString());
+        }
+      }
+    }
+
     void pickImageFromGallery() async {
       try {
         var file = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -161,7 +200,7 @@ class _BookDetailState extends State<BookDetail> {
                   new ListTile(
                       leading: new Icon(Icons.camera),
                       title: new Text('Add with camera'),
-                      onTap: () => {}),
+                      onTap: () => {takePicture()}),
                   new ListTile(
                       leading: new Icon(Icons.image),
                       title: new Text('Choose from gallery'),
@@ -182,11 +221,15 @@ class _BookDetailState extends State<BookDetail> {
     }
 
     final makeLineListTile = (Line line) => ListTile(
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          contentPadding: EdgeInsets.fromLTRB(20, 10, 0, 10),
           title: Text(
             line.line,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: new TextStyle(
+              fontSize: 13.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           onTap: () => {
             Navigator.push(
@@ -196,6 +239,35 @@ class _BookDetailState extends State<BookDetail> {
               ),
             )
           },
+          trailing: PopupMenuButton(
+            icon: Icon(Icons.more_vert),
+            onSelected: (result) async {
+              switch (result) {
+                case 'delete':
+                  await deleteLine(line);
+                  book.deleteLine(line.id);
+                  break;
+                case 'share':
+                  Share.share(line.line);
+                  break;
+                default:
+              }
+              setState(() {});
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+              const PopupMenuItem(
+                value: "share",
+                child: Text('Share'),
+              ),
+              const PopupMenuItem(
+                value: "delete",
+                child: Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
+          ),
         );
 
     final makeLineCard = (Line line) => Card(
@@ -208,7 +280,8 @@ class _BookDetailState extends State<BookDetail> {
         );
 
     final makeBody = Container(
-      child: Container(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
         padding: const EdgeInsets.all(8),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Card(
@@ -220,10 +293,6 @@ class _BookDetailState extends State<BookDetail> {
               child: makeListTile(book),
             ),
           ),
-          if (book.lines.length > 0)
-            ListView(
-                children:
-                    book.lines.map((line) => makeLineCard(line)).toList()),
           FlatButton.icon(
             padding: EdgeInsets.symmetric(vertical: 12),
             icon: Icon(Icons.add),
@@ -235,6 +304,10 @@ class _BookDetailState extends State<BookDetail> {
               showAddLineDialog(context);
             },
           ),
+          if (book.lines.length > 0)
+            ListView(
+                shrinkWrap: true,
+                children: book.lines.map((line) => makeLineCard(line)).toList())
         ]),
       ),
     );

@@ -104,20 +104,7 @@ class _LineDetailState extends State<LineDetail> {
       child: Container(
         padding: const EdgeInsets.all(8),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          ExpandablePanel(
-            collapsed: Text(
-              line.line,
-              softWrap: true,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            expanded: Text(
-              line.line,
-              softWrap: true,
-            ),
-            tapHeaderToExpand: true,
-            hasIcon: true,
-          )
+          Text(line.line)
         ]),
       ),
     );
