@@ -25,7 +25,7 @@ class _BookEditPageState extends State<BookEditPage> {
       actions: !isCreate
           ? <Widget>[
               IconButton(
-                icon: Icon(Icons.delete, color: Colors.red[400]),
+                icon: Icon(Icons.delete),
                 onPressed: () {
                   showDialog(
                       barrierDismissible: false,
@@ -86,7 +86,7 @@ class _BookEditPageState extends State<BookEditPage> {
 
     final makeBody = Container(
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(12),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           BookForm(book, isCreate, onSubmit),
         ]),

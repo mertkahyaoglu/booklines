@@ -66,18 +66,12 @@ class _LineFormState extends State<LineForm> {
                 },
               ),
               TextFormField(
-                initialValue: line.pageNumber.toString(),
+                initialValue: line.pageNumber > 0 ? line.pageNumber.toString() : null,
                 decoration: InputDecoration(labelText: 'Line'),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   WhitelistingTextInputFormatter.digitsOnly
                 ],
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter a page number for your line';
-                  }
-                  return null;
-                },
                 onSaved: (String val) {
                   pageNumber = num.parse(val);
                 },

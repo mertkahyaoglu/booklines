@@ -25,7 +25,6 @@ class Line {
         bookId = data['bookId'];
 
   Map<String, dynamic> toMap() {
-      print(line + pageNumber.toString() + bookId.toString());
     return {
       'line': line,
       'pageNumber': pageNumber,

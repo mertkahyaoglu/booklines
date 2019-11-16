@@ -29,12 +29,10 @@ class _LineEditPageState extends State<LineEditPage> {
     );
 
     final makeBody = Container(
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [LineForm(line, isCreate, onSubmit)]),
-      ),
+      padding: const EdgeInsets.all(12),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [LineForm(line, isCreate, onSubmit)]),
     );
 
     return Scaffold(

@@ -34,11 +34,9 @@ class _BookDetailState extends State<BookDetail> {
 
   @override
   Widget build(BuildContext context) {
-    book.lines
-        .forEach((l) => print('LLLL: ${l.id} ${l.pageNumber} ${l.bookId}'));
     final topAppBar = AppBar(title: Text(book.title), actions: <Widget>[
       IconButton(
-        icon: Icon(Icons.delete, color: Colors.red[400]),
+        icon: Icon(Icons.delete),
         onPressed: () {
           showDialog(
             barrierDismissible: false,
@@ -99,22 +97,19 @@ class _BookDetailState extends State<BookDetail> {
               ),
               subtitle:
                   (book.description != null) ? Text(book.description) : null,
-              onTap: () => {},
-              trailing: IconButton(
-                icon: Icon(
-                  Icons.edit,
-                  color: ThemeColors.textColor,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return BookEditPage(book: book, isCreate: false);
-                      },
-                    ),
-                  );
-                },
+              onTap: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return BookEditPage(book: book, isCreate: false);
+                    },
+                  ),
+                )
+              },
+              trailing: Icon(
+                Icons.edit,
+                color: ThemeColors.textColor,
               ),
             )
           ],
@@ -231,6 +226,7 @@ class _BookDetailState extends State<BookDetail> {
               fontWeight: FontWeight.bold,
             ),
           ),
+            subtitle: line.pageNumber > 0 ? Text(line.pageNumber.toString()) : null,
           onTap: () => {
             Navigator.push(
               context,
@@ -280,36 +276,36 @@ class _BookDetailState extends State<BookDetail> {
         );
 
     final makeBody = Container(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        padding: const EdgeInsets.all(8),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Card(
-            semanticContainer: true,
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      color: Color.fromRGBO(237, 236, 237, 1.0), width: 0.5)),
-              child: makeListTile(book),
-            ),
+      padding: const EdgeInsets.all(12),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Card(
+          semanticContainer: true,
+          child: Container(
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: Color.fromRGBO(237, 236, 237, 1.0), width: 0.5)),
+            child: makeListTile(book),
           ),
-          FlatButton.icon(
-            padding: EdgeInsets.symmetric(vertical: 12),
-            icon: Icon(Icons.add),
-            label: Text(
-              'Add a line',
-              style: TextStyle(fontSize: 16),
-            ),
-            onPressed: () {
-              showAddLineDialog(context);
-            },
+        ),
+        FlatButton.icon(
+          padding: EdgeInsets.symmetric(vertical: 12),
+          icon: Icon(Icons.add),
+          label: Text(
+            'Add a line',
+            style: TextStyle(fontSize: 16),
           ),
-          if (book.lines.length > 0)
-            ListView(
+          onPressed: () {
+            showAddLineDialog(context);
+          },
+        ),
+        if (book.lines.length > 0)
+          Expanded(
+            child: ListView(
                 shrinkWrap: true,
-                children: book.lines.map((line) => makeLineCard(line)).toList())
-        ]),
-      ),
+                children:
+                    book.lines.map((line) => makeLineCard(line)).toList()),
+          )
+      ]),
     );
 
     return Scaffold(

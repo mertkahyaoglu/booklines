@@ -102,7 +102,7 @@ class _LineDetailState extends State<LineDetail> {
 
     final makeBody = Container(
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(12),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(line.line)
         ]),

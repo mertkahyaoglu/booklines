@@ -19,12 +19,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final topAppBar = AppBar(
       title: Text("Booklines"),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.list),
-          onPressed: () {},
-        )
-      ],
     );
 
     final makeListTile = (Book book) => ListTile(
@@ -67,7 +61,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
-          print(snapshot.data.length);
+
           if (snapshot.data.length == 0) return renderEmpty();
 
           return ListView(
