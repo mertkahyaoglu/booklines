@@ -23,7 +23,7 @@ class _LineDetailState extends State<LineDetail> {
   Widget build(BuildContext context) {
     final topAppBar = AppBar(title: Text("Line"), actions: <Widget>[
       IconButton(
-        icon: Icon(Icons.delete, color: Colors.red[400]),
+        icon: Icon(Icons.delete),
         onPressed: () {
           showDialog(
             barrierDismissible: false,
@@ -58,54 +58,17 @@ class _LineDetailState extends State<LineDetail> {
       )
     ]);
 
-    void onSubmit(book) {
-      updateBook(book);
-    }
-
-    final makeListTile = (Book book) => Column(
-          children: <Widget>[
-            Container(
-              height: 90,
-              decoration: new BoxDecoration(
-                color: ThemeColors.snowmanColor,
-              ),
-            ),
-            ListTile(
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              title: Text(
-                book.title,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle:
-                  (book.description != null) ? Text(book.description) : null,
-              onTap: () => {},
-              trailing: IconButton(
-                icon: Icon(
-                  Icons.edit,
-                  color: ThemeColors.textColor,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return BookEditPage(book: book, isCreate: false);
-                      },
-                    ),
-                  );
-                },
-              ),
-            )
-          ],
-        );
-
     final makeBody = Container(
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(line.line)
-        ]),
+      padding: const EdgeInsets.all(12),
+      child: Card(
+        child: Container(
+            padding: const EdgeInsets.all(24),
+            child: Row(children: [
+              Text(
+                line.line,
+                style: TextStyle(fontSize: 20),
+              )
+            ])),
       ),
     );
 

@@ -238,7 +238,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
-  camera: 38cc83ae9a5667bb5a71c7d9edaf60a91920fd4e
+  camera: d56ad165545ae5a0ffb892376033760a969c68c8
   Firebase: bc9cfc7a96c73268656d5aaab453ff1b4b530e0e
   FirebaseAnalytics: 0e3ecff2c5d86070f7d4325e21f1edabfbd558dc
   FirebaseCore: beeff42c07c30ea94702471d99db2089b594fbbd
@@ -263,10 +263,10 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 800648f8b3127618c1b59c7f97684427630c5ea3
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   GTMSessionFetcher: 43b8b64263023d4f32caa0b40f4c8bfa3c5f36d8
-  image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
+  image_picker: a211f28b95a560433c00f5cd3773f4710a20404d
   mlkit: d3f98c678b509216b5f65ee012ed665df9d86ddd
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
-  path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
+  path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
   share: bae0a282aab4483288913fc4dc0b935d4b491f2e
   sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a

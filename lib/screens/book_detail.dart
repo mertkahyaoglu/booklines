@@ -126,16 +126,18 @@ class _BookDetailState extends State<BookDetail> {
           },
         ),
       );
-      print(line);
-      line.bookId = book.id;
-      int id = await insertLine(line);
-      line.id = id;
 
-      book.addLine(line);
+      if (line != null) {
+        line.bookId = book.id;
+        int id = await insertLine(line);
+        line.id = id;
 
-      setState(() {
-        addedLine = line;
-      });
+        book.addLine(line);
+
+        setState(() {
+          addedLine = line;
+        });
+      }
     }
 
     void takePicture() async {
@@ -226,7 +228,8 @@ class _BookDetailState extends State<BookDetail> {
               fontWeight: FontWeight.bold,
             ),
           ),
-            subtitle: line.pageNumber > 0 ? Text(line.pageNumber.toString()) : null,
+          subtitle:
+              line.pageNumber > 0 ? Text(line.pageNumber.toString()) : null,
           onTap: () => {
             Navigator.push(
               context,
@@ -279,11 +282,7 @@ class _BookDetailState extends State<BookDetail> {
       padding: const EdgeInsets.all(12),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Card(
-          semanticContainer: true,
           child: Container(
-            decoration: BoxDecoration(
-                border: Border.all(
-                    color: Color.fromRGBO(237, 236, 237, 1.0), width: 0.5)),
             child: makeListTile(book),
           ),
         ),

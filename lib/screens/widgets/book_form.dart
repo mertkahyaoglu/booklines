@@ -52,54 +52,59 @@ class _BookFormState extends State<BookForm> {
 
   @override
   Widget build(BuildContext context) {
-    return new Form(
-        key: _formKey,
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              TextFormField(
-                initialValue: book.title,
-                decoration: InputDecoration(labelText: 'Book Title'),
-                keyboardType: TextInputType.text,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter book title';
-                  }
-                  return null;
-                },
-                onChanged: (String val) {
-                  setState(() {
-                    title = val;
-                  });
-                },
-              ),
-              TextFormField(
-                initialValue: book.description,
-                decoration: InputDecoration(labelText: 'Book Description'),
-                keyboardType: TextInputType.text,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter book description';
-                  }
-                  return null;
-                },
-                maxLines: null,
-                onChanged: (String val) {
-                  setState(() {
-                    description = val;
-                  });
-                },
-              ),
-              SizedBox(
-                width: double.maxFinite,
-                child: RaisedButton(
-                  onPressed: isFormChanged() ? submit : null,
-                  color: isFormChanged()
-                      ? ThemeColors.primaryColor
-                      : ThemeColors.secondaryColor,
-                  child: Text("Save"),
-                ),
-              )
-            ]));
+    return Card(
+        child: Container(
+            padding: EdgeInsets.all(12),
+            child: Form(
+                key: _formKey,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      TextFormField(
+                        initialValue: book.title,
+                        decoration: InputDecoration(labelText: 'Book Title'),
+                        keyboardType: TextInputType.text,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter book title';
+                          }
+                          return null;
+                        },
+                        onChanged: (String val) {
+                          setState(() {
+                            title = val;
+                          });
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: book.description,
+                        decoration:
+                            InputDecoration(labelText: 'Book Description'),
+                        keyboardType: TextInputType.text,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter book description';
+                          }
+                          return null;
+                        },
+                        maxLines: null,
+                        onChanged: (String val) {
+                          setState(() {
+                            description = val;
+                          });
+                        },
+                      ),
+                      Container(child: SizedBox(
+                        width: double.maxFinite,
+                        child: RaisedButton(
+                          onPressed: isFormChanged() ? submit : null,
+                          color: isFormChanged()
+                              ? ThemeColors.primaryColor
+                              : ThemeColors.secondaryColor,
+                          child: Text("Save"),
+                        ),
+                      ),
+                      margin: new EdgeInsets.only(top: 12),)
+                    ]))));
   }
 }

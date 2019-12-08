@@ -44,45 +44,53 @@ class _LineFormState extends State<LineForm> {
 
   @override
   Widget build(BuildContext context) {
-    return new Form(
-        key: _formKey,
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              TextFormField(
-                initialValue: line.line,
-                autofocus: line.line.isEmpty,
-                decoration: InputDecoration(labelText: 'Line'),
-                keyboardType: TextInputType.text,
-                maxLines: null,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter a line';
-                  }
-                  return null;
-                },
-                onSaved: (String val) {
-                  lineText = val;
-                },
-              ),
-              TextFormField(
-                initialValue: line.pageNumber > 0 ? line.pageNumber.toString() : null,
-                decoration: InputDecoration(labelText: 'Line'),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  WhitelistingTextInputFormatter.digitsOnly
-                ],
-                onSaved: (String val) {
-                  pageNumber = num.parse(val);
-                },
-              ),
-              SizedBox(
-                width: double.maxFinite,
-                child: RaisedButton(
-                  onPressed: submit,
-                  child: Text("Save"),
-                ),
-              )
-            ]));
+    return Card(
+        child: Container(
+            padding: EdgeInsets.all(12),
+            child: Form(
+                key: _formKey,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      TextFormField(
+                        initialValue: line.line,
+                        autofocus: line.line.isEmpty,
+                        decoration: InputDecoration(labelText: 'Line'),
+                        keyboardType: TextInputType.text,
+                        maxLines: null,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter a line';
+                          }
+                          return null;
+                        },
+                        onSaved: (String val) {
+                          lineText = val;
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: line.pageNumber > 0
+                            ? line.pageNumber.toString()
+                            : null,
+                        decoration: InputDecoration(labelText: 'Line Number'),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          WhitelistingTextInputFormatter.digitsOnly
+                        ],
+                        onSaved: (String val) {
+                          var parsedValue = num.tryParse(val);
+                          pageNumber = parsedValue > 0 ? parsedValue : 0;
+                        },
+                      ),
+                      Container(
+                          child: SizedBox(
+                            width: double.maxFinite,
+                            child: RaisedButton(
+                              onPressed: submit,
+                              child: Text("Save"),
+                            ),
+                          ),
+                          margin: new EdgeInsets.only(top: 12))
+                    ]))));
   }
 }

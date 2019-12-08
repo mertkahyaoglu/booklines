@@ -35,7 +35,6 @@ class _LineEditPageState extends State<LineEditPage> {
           children: [LineForm(line, isCreate, onSubmit)]),
     );
 
-    return Scaffold(
-        backgroundColor: Colors.white, appBar: topAppBar, body: makeBody);
+    return Scaffold(appBar: topAppBar, body: makeBody);
   }
 }

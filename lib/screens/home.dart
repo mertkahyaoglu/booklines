@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:booklines/models/book.dart';
 import 'package:booklines/screens/book_detail.dart';
 import 'package:booklines/screens/book_edit.dart';
+import 'package:booklines/theme.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -51,7 +52,9 @@ class _HomePageState extends State<HomePage> {
         );
 
     Widget renderEmpty() {
-      return Center(child: Text("Empty"));
+      return Center(
+            child: Text("Press + button to create your first book.", style: TextStyle(fontSize: 20),)
+          );
     }
 
     final makeBody = Container(

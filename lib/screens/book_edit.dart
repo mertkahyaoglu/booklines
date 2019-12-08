@@ -82,6 +82,8 @@ class _BookEditPageState extends State<BookEditPage> {
         } else {
             updateBook(book);
         }
+
+        Navigator.pop(context);
     }
 
     final makeBody = Container(
