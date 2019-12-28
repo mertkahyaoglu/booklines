@@ -141,8 +141,6 @@ class _BookDetailState extends State<BookDetail> {
     }
 
     void takePicture() async {
-      Navigator.pop(context);
-
       List<CameraDescription> cameras = await availableCameras();
 
       final File imageFile = await Navigator.push(
