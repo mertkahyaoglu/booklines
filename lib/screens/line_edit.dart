@@ -28,12 +28,14 @@ class _LineEditPageState extends State<LineEditPage> {
       title: Text("Booklines"),
     );
 
-    final makeBody = Container(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [LineForm(line, isCreate, onSubmit)]),
-    );
+    final makeBody =
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Expanded(
+            child: SingleChildScrollView(
+                padding: const EdgeInsets.all(12),
+                child: LineForm(line, isCreate, onSubmit)),
+        )
+    ]);
 
     return Scaffold(appBar: topAppBar, body: makeBody);
   }
