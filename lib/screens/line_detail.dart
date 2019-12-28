@@ -64,10 +64,10 @@ class _LineDetailState extends State<LineDetail> {
         child: Container(
             padding: const EdgeInsets.all(24),
             child: Row(children: [
-              Text(
+              Flexible( child: Text(
                 line.line,
                 style: TextStyle(fontSize: 20),
-              )
+              ))
             ])),
       ),
     );
