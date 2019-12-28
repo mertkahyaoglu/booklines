@@ -33,8 +33,13 @@ class _BookFormState extends State<BookForm> {
 
       Scaffold.of(context).showSnackBar(snackBar);
 
-      book.title = title;
-      book.description = description;
+      if(title != null) {
+        book.title = title;
+      }
+
+      if(description != null) {
+        book.description = description;
+      }
 
       onSubmit(book);
     }
