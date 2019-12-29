@@ -82,18 +82,12 @@ class _BookDetailState extends State<BookDetail> {
 
     final makeListTile = (Book book) => Column(
           children: <Widget>[
-            Container(
-              height: 90,
-              decoration: new BoxDecoration(
-                color: ThemeColors.snowmanColor,
-              ),
-            ),
             ListTile(
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
               title: Text(
                 book.title,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               subtitle:
                   (book.description != null) ? Text(book.description) : null,
@@ -226,8 +220,6 @@ class _BookDetailState extends State<BookDetail> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          subtitle:
-              line.pageNumber > 0 ? Text(line.pageNumber.toString()) : null,
           onTap: () => {
             Navigator.push(
               context,

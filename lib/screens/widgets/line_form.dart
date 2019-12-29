@@ -23,7 +23,6 @@ class _LineFormState extends State<LineForm> {
   _LineFormState(this.line, this.isCreate, this.onSubmit);
 
   String lineText;
-  int pageNumber;
 
   submit() {
     if (_formKey.currentState.validate()) {
@@ -34,7 +33,7 @@ class _LineFormState extends State<LineForm> {
       Scaffold.of(context).showSnackBar(snackBar);
 
       line.line = lineText;
-      line.pageNumber = pageNumber;
+      line.pageNumber = 0;
 
       onSubmit(line);
     }
@@ -66,20 +65,6 @@ class _LineFormState extends State<LineForm> {
                         },
                         onSaved: (String val) {
                           lineText = val;
-                        },
-                      ),
-                      TextFormField(
-                        initialValue: line.pageNumber > 0
-                            ? line.pageNumber.toString()
-                            : null,
-                        decoration: InputDecoration(labelText: 'Line Number'),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          WhitelistingTextInputFormatter.digitsOnly
-                        ],
-                        onSaved: (String val) {
-                          var parsedValue = num.tryParse(val);
-                          pageNumber = parsedValue > 0 ? parsedValue : 0;
                         },
                       ),
                       Container(
