@@ -9,6 +9,7 @@ class ThemeColors {
 }
 
 final theme = new ThemeData(
+    fontFamily: "Ember",
     scaffoldBackgroundColor: ThemeColors.secondaryColor,
     primaryTextTheme:
         TextTheme(title: TextStyle(color: ThemeColors.textColor)),
