@@ -209,8 +209,13 @@ class _BookDetailState extends State<BookDetail> {
           });
     }
 
+    void onLineDelete(line) async {
+        await deleteLine(line);
+        book.deleteLine(line.id);
+    }
+
     final makeLineListTile = (Line line) => ListTile(
-          contentPadding: EdgeInsets.fromLTRB(20, 10, 0, 10),
+          contentPadding: EdgeInsets.fromLTRB(20, 0, 0, 0),
           title: Text(
             line.line,
             overflow: TextOverflow.ellipsis,
@@ -224,17 +229,16 @@ class _BookDetailState extends State<BookDetail> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => LineDetail(line: line),
+                builder: (context) => LineDetail(line: line, onDelete: onLineDelete),
               ),
             )
           },
           trailing: PopupMenuButton(
             icon: Icon(Icons.more_vert),
-            onSelected: (result) async {
+            onSelected: (result) {
               switch (result) {
                 case 'delete':
-                  await deleteLine(line);
-                  book.deleteLine(line.id);
+                  onLineDelete(line);
                   break;
                 case 'share':
                   Share.share(line.line);
@@ -270,7 +274,7 @@ class _BookDetailState extends State<BookDetail> {
 
     final makeBody = Container(
       padding: const EdgeInsets.all(12),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
         Card(
           child: Container(
             child: makeListTile(book),
