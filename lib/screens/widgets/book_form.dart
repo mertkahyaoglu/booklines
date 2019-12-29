@@ -1,6 +1,5 @@
 import 'package:booklines/models/book.dart';
 import 'package:booklines/theme.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
 class BookForm extends StatefulWidget {
