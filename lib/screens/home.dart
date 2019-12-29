@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           subtitle: Row(
-            children: <Widget>[Text('${book.lines.length} lines added')],
+            children: <Widget>[Text('${book.lines.length} ${(book.lines.length > 1 ? "lines" : "line")} added')],
           ),
           onTap: () => {
             Navigator.push(
