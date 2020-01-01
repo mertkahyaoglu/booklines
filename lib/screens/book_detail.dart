@@ -6,7 +6,6 @@ import 'package:booklines/screens/book_edit.dart';
 import 'package:booklines/screens/line_detail.dart';
 import 'package:booklines/screens/line_edit.dart';
 import 'package:booklines/screens/take_picture.dart';
-import 'package:booklines/theme.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -34,50 +33,20 @@ class _BookDetailState extends State<BookDetail> {
 
   @override
   Widget build(BuildContext context) {
+    book.lines.sort((a, b) => b.id.compareTo(a.id));
     final topAppBar = AppBar(title: Text(book.title), actions: <Widget>[
       IconButton(
-        icon: Icon(Icons.delete),
-        onPressed: () {
-          showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                content: Text.rich(
-                  TextSpan(
-                    text: 'Delete ',
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: book.title,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      TextSpan(text: "?"),
-                    ],
-                  ),
-                ),
-                actions: <Widget>[
-                  new FlatButton(
-                    child: new Text("CANCEL"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  new FlatButton(
-                    child: Text(
-                      "DELETE",
-                      style: TextStyle(color: Colors.red[400]),
-                    ),
-                    onPressed: () {
-                      deleteBook(book);
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      )
+          icon: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return BookEditPage(book: book, isCreate: false);
+                },
+              ),
+            );
+          })
     ]);
 
     final makeListTile = (Book book) => Column(
@@ -91,20 +60,6 @@ class _BookDetailState extends State<BookDetail> {
               ),
               subtitle:
                   (book.description != null) ? Text(book.description) : null,
-              onTap: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return BookEditPage(book: book, isCreate: false);
-                    },
-                  ),
-                )
-              },
-              trailing: Icon(
-                Icons.edit,
-                color: ThemeColors.textColor,
-              ),
             )
           ],
         );
@@ -210,8 +165,8 @@ class _BookDetailState extends State<BookDetail> {
     }
 
     void onLineDelete(line) async {
-        await deleteLine(line);
-        book.deleteLine(line.id);
+      await deleteLine(line);
+      book.deleteLine(line.id);
     }
 
     final makeLineListTile = (Line line) => ListTile(
@@ -221,16 +176,16 @@ class _BookDetailState extends State<BookDetail> {
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             style: new TextStyle(
-              fontSize: 13.0,
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.italic
-            ),
+                fontSize: 13.0,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic),
           ),
           onTap: () => {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => LineDetail(line: line, onDelete: onLineDelete),
+                builder: (context) =>
+                    LineDetail(line: line, onDelete: onLineDelete),
               ),
             )
           },

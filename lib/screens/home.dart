@@ -25,9 +25,14 @@ class _HomePageState extends State<HomePage> {
           title: Text(
             book.title,
             style: TextStyle(fontWeight: FontWeight.bold),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
           subtitle: Row(
-            children: <Widget>[Text('${book.lines.length} ${(book.lines.length > 1 ? "lines" : "line")} added')],
+            children: <Widget>[
+              Text(
+                  '${book.lines.length} ${(book.lines.length > 1 ? "lines" : "line")} added')
+            ],
           ),
           onTap: () => {
             Navigator.push(
@@ -50,8 +55,11 @@ class _HomePageState extends State<HomePage> {
 
     Widget renderEmpty() {
       return Center(
-            child: Text("Press + button to create your first book.", style: TextStyle(fontSize: 20), textAlign: TextAlign.center,)
-          );
+          child: Text(
+        "Press + button to create your first book.",
+        style: TextStyle(fontSize: 20),
+        textAlign: TextAlign.center,
+      ));
     }
 
     final makeBody = Container(
@@ -64,6 +72,7 @@ class _HomePageState extends State<HomePage> {
 
           if (snapshot.data.length == 0) return renderEmpty();
 
+          snapshot.data.sort((a, b) => b.id.compareTo(a.id));
           return ListView(
             children: snapshot.data.map((book) => makeCard(book)).toList(),
           );

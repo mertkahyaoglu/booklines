@@ -30,9 +30,6 @@ final theme = new ThemeData(
       clipBehavior: Clip.antiAlias,
     ),
     appBarTheme: AppBarTheme(
-        iconTheme: IconThemeData(color: ThemeColors.primaryColor),
-        actionsIconTheme:
-            IconThemeData(color: ThemeColors.primaryColor),
+        iconTheme: IconThemeData(color: ThemeColors.textColor),
         color: ThemeColors.backgroundColor,
-        textTheme: TextTheme(),
         elevation: 1));
