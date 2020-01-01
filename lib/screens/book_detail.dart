@@ -223,6 +223,7 @@ class _BookDetailState extends State<BookDetail> {
             style: new TextStyle(
               fontSize: 13.0,
               fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic
             ),
           ),
           onTap: () => {
@@ -285,7 +286,7 @@ class _BookDetailState extends State<BookDetail> {
           icon: Icon(Icons.add),
           label: Text(
             'Add a line',
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           onPressed: () {
             showAddLineDialog(context);

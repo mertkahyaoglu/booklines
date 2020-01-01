@@ -88,7 +88,7 @@ class _LineDetailState extends State<LineDetail> {
               Flexible(
                   child: Text(
                 line.line,
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
               ))
             ])),
       ),

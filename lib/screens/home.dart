@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:booklines/models/book.dart';
 import 'package:booklines/screens/book_detail.dart';
 import 'package:booklines/screens/book_edit.dart';
-import 'package:booklines/theme.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final topAppBar = AppBar(
-      title: Text("Booklines"),
+      title: Text("Booklines", style: TextStyle(fontWeight: FontWeight.bold)),
     );
 
     final makeListTile = (Book book) => ListTile(
@@ -53,7 +50,7 @@ class _HomePageState extends State<HomePage> {
 
     Widget renderEmpty() {
       return Center(
-            child: Text("Press + button to create your first book.", style: TextStyle(fontSize: 20),)
+            child: Text("Press + button to create your first book.", style: TextStyle(fontSize: 20), textAlign: TextAlign.center,)
           );
     }
 
