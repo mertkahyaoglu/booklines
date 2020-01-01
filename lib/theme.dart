@@ -9,7 +9,7 @@ class ThemeColors {
 }
 
 final theme = new ThemeData(
-    fontFamily: "Ember",
+    fontFamily: 'Gelasio',
     scaffoldBackgroundColor: ThemeColors.secondaryColor,
     primaryTextTheme:
         TextTheme(title: TextStyle(color: ThemeColors.textColor)),
