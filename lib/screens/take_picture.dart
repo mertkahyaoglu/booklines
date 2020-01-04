@@ -48,7 +48,7 @@ class TakePicturePageState extends State<TakePicturePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Take a picture')),
+      appBar: AppBar(title: Text('Take a photo')),
       // Wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner
       // until the controller has finished initializing.
@@ -64,6 +64,7 @@ class TakePicturePageState extends State<TakePicturePage> {
           }
         },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.camera_alt),
         // Provide an onPressed callback.
@@ -87,10 +88,7 @@ class TakePicturePageState extends State<TakePicturePage> {
             await _controller.takePicture(path);
 
             File imageFile = File(path);
-            Navigator.pop(
-              context,
-              imageFile
-            );
+            Navigator.pop(context, imageFile);
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
