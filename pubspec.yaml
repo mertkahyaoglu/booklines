@@ -33,6 +33,7 @@ dependencies:
     share: ^0.6.2+4
     expandable: ^3.0.1
     splashscreen:
+    image_crop:
 
 dev_dependencies:
   flutter_test:

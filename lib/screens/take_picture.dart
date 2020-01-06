@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:booklines/screens/crop_picture.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
@@ -88,7 +89,17 @@ class TakePicturePageState extends State<TakePicturePage> {
             await _controller.takePicture(path);
 
             File imageFile = File(path);
-            Navigator.pop(context, imageFile);
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return CropPicturePage(imageFile: imageFile);
+                },
+              ),
+            );
+
+            // Navigator.pop(context, imageFile);
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
