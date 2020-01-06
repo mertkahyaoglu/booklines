@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:booklines/models/book.dart';
 import 'package:booklines/models/line.dart';
 import 'package:booklines/screens/book_edit.dart';
+import 'package:booklines/screens/crop_picture.dart';
 import 'package:booklines/screens/line_detail.dart';
 import 'package:booklines/screens/line_edit.dart';
 import 'package:booklines/screens/take_picture.dart';
@@ -114,10 +115,22 @@ class _BookDetailState extends State<BookDetail> {
 
     void pickImageFromGallery() async {
       try {
-        var file = await ImagePicker.pickImage(source: ImageSource.gallery);
-        if (file != null) {
+        File imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+        if (imageFile != null) {
+          File croppedFile = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return CropPicturePage(imageFile: imageFile);
+              },
+            ),
+          );
+
+          File targetFile = croppedFile != null ? croppedFile : imageFile;
+
           List<VisionText> visionTextList =
-              await detector.detectFromPath(file?.path);
+              await detector.detectFromPath(targetFile?.path);
           String wholeText = visionTextList.map((vt) => vt.text).join('\n');
           passTextToLineScreen(text: wholeText);
         }

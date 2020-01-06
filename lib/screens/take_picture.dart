@@ -90,7 +90,7 @@ class TakePicturePageState extends State<TakePicturePage> {
 
             File imageFile = File(path);
 
-            Navigator.push(
+            File croppedFile = await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) {
@@ -99,7 +99,7 @@ class TakePicturePageState extends State<TakePicturePage> {
               ),
             );
 
-            // Navigator.pop(context, imageFile);
+            Navigator.pop(context, croppedFile);
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
