@@ -7,6 +7,7 @@ import 'package:booklines/screens/crop_picture.dart';
 import 'package:booklines/screens/line_detail.dart';
 import 'package:booklines/screens/line_edit.dart';
 import 'package:booklines/screens/take_picture.dart';
+import 'package:booklines/theme.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -115,7 +116,8 @@ class _BookDetailState extends State<BookDetail> {
 
     void pickImageFromGallery() async {
       try {
-        File imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+        File imageFile =
+            await ImagePicker.pickImage(source: ImageSource.gallery);
 
         if (imageFile != null) {
           File croppedFile = await Navigator.push(
@@ -180,6 +182,7 @@ class _BookDetailState extends State<BookDetail> {
     void onLineDelete(line) async {
       await deleteLine(line);
       book.deleteLine(line.id);
+      setState(() {});
     }
 
     final makeLineListTile = (Line line) => ListTile(
@@ -197,8 +200,10 @@ class _BookDetailState extends State<BookDetail> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    LineDetail(line: line, onDelete: onLineDelete),
+                builder: (context) => LineDetail(
+                    line: line,
+                    title: '${book.title} - Line',
+                    onDelete: onLineDelete),
               ),
             )
           },
@@ -243,23 +248,32 @@ class _BookDetailState extends State<BookDetail> {
 
     final makeBody = Container(
       padding: const EdgeInsets.all(12),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Card(
           child: Container(
             child: makeListTile(book),
           ),
         ),
-        FlatButton.icon(
-          padding: EdgeInsets.symmetric(vertical: 12),
-          icon: Icon(Icons.add),
-          label: Text(
-            'Add a line',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        if (book.lines.length == 0)
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Center(
+                child: Text(
+              "Press + button to create your first line.",
+              style: TextStyle(fontSize: 18),
+            )),
           ),
-          onPressed: () {
-            showAddLineDialog(context);
-          },
-        ),
+        if (book.lines.length > 0)
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Text(
+              'Lines',
+              style: TextStyle(
+                  fontSize: 18,
+                  color: ThemeColors.textColor,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
         if (book.lines.length > 0)
           Expanded(
             child: ListView(
@@ -273,6 +287,14 @@ class _BookDetailState extends State<BookDetail> {
     return Scaffold(
       appBar: topAppBar,
       body: makeBody,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showAddLineDialog(context);
+        },
+        child: Icon(
+          Icons.add,
+        ),
+      ),
     );
   }
 }

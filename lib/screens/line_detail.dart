@@ -5,22 +5,22 @@ import 'package:share/share.dart';
 class LineDetail extends StatefulWidget {
   final Line line;
   final Function onDelete;
+  final String title;
 
-  LineDetail({Key key, this.line, this.onDelete}) : super(key: key);
+  LineDetail({Key key, this.line, this.title, this.onDelete}) : super(key: key);
 
   @override
-  _LineDetailState createState() => _LineDetailState(line, onDelete);
+  _LineDetailState createState() => _LineDetailState();
 }
 
 class _LineDetailState extends State<LineDetail> {
-  Line line;
-  Function onDelete;
-
-  _LineDetailState(this.line, this.onDelete);
-
   @override
   Widget build(BuildContext context) {
-    final topAppBar = AppBar(title: Text("Line"), actions: <Widget>[
+    Line line = widget.line;
+    String title = widget.title;
+    Function onDelete = widget.onDelete;
+
+    final topAppBar = AppBar(title: Text(title), actions: <Widget>[
       PopupMenuButton(
         icon: Icon(Icons.more_vert),
         onSelected: (result) async {
@@ -37,7 +37,7 @@ class _LineDetailState extends State<LineDetail> {
                       new FlatButton(
                         child: new Text("CANCEL"),
                         onPressed: () {
-                           Navigator.pop(context);
+                          Navigator.pop(context);
                         },
                       ),
                       new FlatButton(
@@ -47,6 +47,7 @@ class _LineDetailState extends State<LineDetail> {
                         ),
                         onPressed: () {
                           onDelete(line);
+
                           Navigator.pop(context);
                           Navigator.pop(context);
                         },

@@ -28,14 +28,14 @@ class CropPicturePageState extends State<CropPicturePage> {
 
   @override
   Widget build(BuildContext context) {
-    final topAppBar = AppBar(title: Text('Take a photo'), actions: <Widget>[
+    final topAppBar = AppBar(title: Text('Crop your photo'), actions: <Widget>[
       IconButton(
           icon: Icon(Icons.done),
           onPressed: () async {
             final crop = cropKey.currentState;
             File croppedImage = await ImageCrop.cropImage(
-                file: widget.imageFile,
-                area: crop.area,
+              file: widget.imageFile,
+              area: crop.area,
             );
 
             Navigator.pop(context, croppedImage);
