@@ -1,3 +1,4 @@
+import 'package:booklines/screens/home.dart';
 import 'package:booklines/screens/splash.dart';
 import 'package:booklines/theme.dart' as MainTheme;
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => SplashPage(),
+        '/home': (context) => HomePage(),
       },
     );
   }

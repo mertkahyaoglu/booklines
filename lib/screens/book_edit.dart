@@ -59,8 +59,7 @@ class _BookEditPageState extends State<BookEditPage> {
                             ),
                             onPressed: () {
                               deleteBook(book);
-                              Navigator.pop(context);
-                              Navigator.pop(context);
+                              Navigator.pushNamedAndRemoveUntil(context, "/home", (Route<dynamic> route) => false);
                             },
                           ),
                         ],
