@@ -36,15 +36,16 @@ class _BookFormState extends State<BookForm> {
         book.title = title;
       }
 
-      if(description != null) {
-        book.description = description;
-      }
+      book.description = description == null ? "" : description;
 
       onSubmit(book);
     }
   }
 
   bool isFormChanged() {
+    if (isCreate) {
+      return true;
+    }
     if (title != book.title) {
       return true;
     }
@@ -85,12 +86,6 @@ class _BookFormState extends State<BookForm> {
                         decoration:
                             InputDecoration(labelText: 'Book Description'),
                         keyboardType: TextInputType.text,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter book description';
-                          }
-                          return null;
-                        },
                         maxLines: null,
                         onChanged: (String val) {
                           setState(() {

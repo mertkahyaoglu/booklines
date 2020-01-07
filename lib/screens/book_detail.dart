@@ -61,7 +61,7 @@ class _BookDetailState extends State<BookDetail> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               subtitle:
-                  (book.description != null) ? Text(book.description) : null,
+                  (book.description != null && book.description != "") ? Text(book.description) : null,
             )
           ],
         );
