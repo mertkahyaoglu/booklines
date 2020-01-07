@@ -13,7 +13,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return new SplashScreen(
       seconds: 1,
-      navigateAfterSeconds: new HomePage(title: "Home"),
+      navigateAfterSeconds: HomePage(),
       title: new Text('Booklines',
       style: new TextStyle(
         fontWeight: FontWeight.bold,
