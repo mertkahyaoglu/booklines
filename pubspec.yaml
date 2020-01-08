@@ -16,7 +16,7 @@ dependencies:
     uuid: 2.0.1
     sqflite: ^1.2.0
     path: ^1.6.4
-    path_provider: ^0.4.1
+    path_provider: ^1.5.1
     image_picker: ^0.6.3
     mlkit: ^0.15.0
     camera: ^0.5.7+2
