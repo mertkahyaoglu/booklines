@@ -70,6 +70,7 @@ class _BookFormState extends State<BookForm> {
                         textCapitalization: TextCapitalization.words,
                         decoration: InputDecoration(labelText: 'Book Title'),
                         keyboardType: TextInputType.text,
+                        autofocus: book.title.isEmpty,
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Please enter book title';
