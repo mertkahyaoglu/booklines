@@ -67,6 +67,7 @@ class _BookFormState extends State<BookForm> {
                     children: <Widget>[
                       TextFormField(
                         initialValue: book.title,
+                        textCapitalization: TextCapitalization.words,
                         decoration: InputDecoration(labelText: 'Book Title'),
                         keyboardType: TextInputType.text,
                         validator: (value) {
@@ -83,6 +84,7 @@ class _BookFormState extends State<BookForm> {
                       ),
                       TextFormField(
                         initialValue: book.description,
+                        textCapitalization: TextCapitalization.sentences,
                         decoration:
                             InputDecoration(labelText: 'Book Description'),
                         keyboardType: TextInputType.text,

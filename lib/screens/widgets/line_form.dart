@@ -54,6 +54,7 @@ class _LineFormState extends State<LineForm> {
                       TextFormField(
                         initialValue: line.line,
                         autofocus: line.line.isEmpty,
+                        textCapitalization: TextCapitalization.sentences,
                         decoration: InputDecoration(labelText: 'Line'),
                         keyboardType: TextInputType.text,
                         maxLines: null,
